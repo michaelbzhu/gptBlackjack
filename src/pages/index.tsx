@@ -1,23 +1,24 @@
-import React from 'react'
-import Head from 'next/head'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import React from "react";
+import Head from "next/head";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   // Fetch data from generateCard API route
   const [cardData, setCardData] = React.useState(null);
-  
+
   React.useEffect(() => {
+    console.log('useEffect', { cardData })
     async function fetchData() {
-      const response = await fetch('/api/generateCard');
+      const response = await fetch("/api/generateCard");
       const data = await response.json();
       setCardData(data);
     }
-    fetchData();
+    fetchData()
   }, []);
-  
+
   return (
     <>
       <Head>
@@ -28,8 +29,17 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <h1 className={inter.className}>GPT Blackjack</h1>
-        
+        {/* Display the cardData */}
+        {cardData ? (
+          <div>
+            {JSON.stringify(cardData)}
+            {/*             <p>Card: {cardData.card}</p>
+            <p>Suit: {cardData.suit}</p> */}
+          </div>
+        ) : (
+          <p>Loading...</p>
+        )}
       </main>
     </>
-  )
+  );
 }

@@ -18,13 +18,14 @@ fetch('https://api.openai.com/v1/chat/completions', {
   },
   body: JSON.stringify({
     "model": "gpt-3.5-turbo",
-    "messages": [{"role": "user", "content": "Randomly generate a single playing card"}]
+    "messages": [{"role": "user", "content": "Randomly generate a single playing card with the format suit (D, H, C, S) : rank (1 - 13)"}]
   })
 })
   .then(response => response.json())
   .then(data => {
     // Process the data here
-      res.status(200).json(data)
+      console.log(data.choices[0].message.content)
+      res.status(200).json(data.choices[0].message.content)
   })
   .catch(error => {
     console.error('Error fetching data:', error);
